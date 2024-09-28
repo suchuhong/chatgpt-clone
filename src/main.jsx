@@ -10,6 +10,7 @@ import SignInPage from './routes/signInPage/signInPage'
 import SignUpPage from './routes/signUpPage/signUpPage'
 import RootLayout from './layouts/rootLayout/RootLayout'
 import DashboardLayout from './layouts/dashboardLayout/DashboardLayout'
+
 const router = createBrowserRouter([
   {
     element: <RootLayout />,
