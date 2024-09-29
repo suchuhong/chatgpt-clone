@@ -12,9 +12,9 @@ export default function ChatList() {
       <hr />
       <span className="title">RECENT CHATS</span>
       <div className="list">
-        <Link to="/">Chat test1</Link>
-        <Link to="/">Chat test2</Link>
-        <Link to="/">Chat test3</Link>
+        <Link to="/dashboard/chats/1">Chat test1</Link>
+        <Link to="/dashboard/chats/2">Chat test2</Link>
+        <Link to="/dashboard/chats/3">Chat test3</Link>
       </div>
       <hr />
       <div className="upgrade">
