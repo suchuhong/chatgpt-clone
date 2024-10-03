@@ -1,6 +1,7 @@
 import React from 'react'
 import './newPrompt.css'
 import { useRef, useEffect } from 'react'
+import Upload from '../upload/Upload'
 
 export default function NewPrompt() {
   const endRef = useRef(null)
@@ -17,9 +18,7 @@ export default function NewPrompt() {
       测试
       <div className="endChat" ref={endRef}></div>
       <form className="newForm">
-        <label htmlFor="file">
-          <img src="/attachment.png" alt="" />
-        </label>
+        <Upload />
         <input id="file" type="file" multiple={false} hidden />
         <input type="text" name="text" placeholder="Ask me anything..." />
         <button>
