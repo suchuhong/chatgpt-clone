@@ -1,0 +1,11 @@
+IMAGE_KIT_ENDPOINT=xxx
+IMAGE_KIT_PUBLIC_KEY=xx
+IMAGE_KIT_PRIVATE_KEY=xx
+
+
+CLIENT_URL=http://client:5173
+MONGODB_URL=mongodb://root:example@mongodb_chat_pro:27017/aichat?authSource=admin
+
+CLERK_PUBLISHABLE_KEY=xxx
+CLERK_SECRET_KEY=xxx
+

@@ -128,7 +128,7 @@ app.get("/api/userchats", ClerkExpressRequireAuth(), async (req, res) => {
 
     // console.log("userChats +++++++++++ ", userChats)
 
-    res.status(200).send(userChats[0].chats);
+    res.status(200).send(userChats.length > 0 ? userChats[0].chats : []);
   } catch (err) {
     console.log(err);
     res.status(500).send("Error fetching userchats!");

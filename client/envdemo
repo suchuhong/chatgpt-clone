@@ -1,0 +1,12 @@
+# 所有希望暴露给客户端的环境变量必须以 VITE_ 前缀开头，这样 Vite 才会将它们注入到前端代码中供使用
+VITE_CLERK_PUBLISHABLE_KEY=xxx
+
+VITE_IMAGE_KIT_ENDPOINT=xxx
+VITE_IMAGE_KIT_PUBLIC_KEY=xxxx
+
+VITE_API_URL=http://backend:3000
+VITE_API_IMAGE_UPLOAD=http://backend:3000/api/upload
+VITE_API_CHATS=http://backend:3000/api/chats
+
+VITE_GEMINI_PUBLIC_KEY=xxx
+
