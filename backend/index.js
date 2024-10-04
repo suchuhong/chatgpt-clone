@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import ImageKit from "imagekit";
+import mongoose from "mongoose";
 import path from "path";
 import url, { fileURLToPath } from "url";
 
@@ -16,6 +17,17 @@ app.use(
     credentials: true,
   })
 );
+
+app.use(express.json());
+
+const connect = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URL);
+    console.log("Connected to MongoDB");
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 
 // SDK initialization
@@ -36,5 +48,6 @@ app.get("/api/test", (req, res) => {
 })
 
 app.listen(port, () => {
+  connect();
   console.log(`Server running on ${port}`);
 });
