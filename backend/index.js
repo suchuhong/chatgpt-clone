@@ -161,6 +161,7 @@ app.put("/api/chats/:id", ClerkExpressRequireAuth(), async (req, res) => {
   ];
 
   try {
+    // 存储数据
     const updatedChat = await Chat.updateOne(
       { _id: req.params.id, userId },
       {
