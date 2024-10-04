@@ -63,20 +63,23 @@ export default function NewPrompt({ data }) {
   })
 
   const chat = model.startChat({
-    history: [
-      {
-        role: 'user',
-        parts: [{ text: 'hello' }],
-      },
-      {
-        role: 'model',
-        parts: [{ text: 'hello' }],
-      },
-      // data?.history.map(({ role, parts }) => ({
-      //   role,
-      //   parts: [{ text: parts[0].text }],
-      // })),
-    ],
+    // history: [
+    //   {
+    //     role: 'user',
+    //     parts: [{ text: 'hello' }],
+    //   },
+    //   {
+    //     role: 'model',
+    //     parts: [{ text: 'hello' }],
+    //   },
+    // ],
+    history: data?.history.map(({ role, parts }) => {
+      console.log('role +++++++++++++', role, typeof role)
+      return {
+        role: role,
+        parts: [{ text: parts[0].text }],
+      }
+    }),
     generationConfig: {
       // maxOutputTokens: 100,
     },
