@@ -6,7 +6,7 @@ import Upload from '../upload/Upload'
 import model from '../../lib/gemini'
 import Markdown from 'react-markdown'
 
-export default function NewPrompt() {
+export default function NewPrompt({ data }) {
   const [question, setQuestion] = useState('')
   const [answer, setAnswer] = useState('')
   const [img, setImg] = useState({
@@ -22,7 +22,7 @@ export default function NewPrompt() {
   // 二次作用，[]里的数据变化触发
   useEffect(() => {
     endRef.current.scrollIntoView({ behavior: 'smooth' })
-  }, [question, answer, img.dbData])
+  }, [data, question, answer, img.dbData])
 
   const chat = model.startChat({
     history: [
@@ -34,6 +34,10 @@ export default function NewPrompt() {
         role: 'model',
         parts: [{ text: 'hello' }],
       },
+      // data?.history.map(({ role, parts }) => ({
+      //   role,
+      //   parts: [{ text: parts[0].text }],
+      // })),
     ],
     generationConfig: {
       // maxOutputTokens: 100,

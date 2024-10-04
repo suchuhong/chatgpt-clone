@@ -1,8 +1,33 @@
 import './dashboardPage.css'
 import { useAuth } from '@clerk/clerk-react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useNavigate } from 'react-router-dom'
 
 const DashboardPage = () => {
   const { userId, isLoaded } = useAuth()
+
+  const queryClient = useQueryClient()
+
+  const navigate = useNavigate()
+
+  const mutation = useMutation({
+    mutationFn: (text) => {
+      return fetch(`${import.meta.env.VITE_API_URL}/api/chats`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text }),
+      }).then((res) => res.json())
+    },
+    onSuccess: (id) => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ['userChats'] })
+      navigate(`/dashboard/chats/${id}`)
+    },
+  })
+
   // 调用接口
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -10,14 +35,7 @@ const DashboardPage = () => {
     const text = e.target.text.value
     if (!text) return
 
-    await fetch(import.meta.env.VITE_API_CHATS, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({ text }),
-    })
+    mutation.mutate(text)
   }
 
   return (
