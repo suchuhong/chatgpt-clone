@@ -12,10 +12,11 @@ const DashboardPage = () => {
 
     await fetch(import.meta.env.VITE_API_CHATS, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-type': 'application/json',
       },
-      body: JSON.stringify({ userId, text }),
+      body: JSON.stringify({ text }),
     })
   }
 

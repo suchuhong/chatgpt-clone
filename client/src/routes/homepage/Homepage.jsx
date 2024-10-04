@@ -7,6 +7,10 @@ import { useState } from 'react'
 export default function Homepage() {
   const [typingStatus, setTypingStatus] = useState('human1')
 
+  // const test = async () => {
+  //   await fetch('http://localhost:3200/api/test1', { credentials: 'include' })
+  // }
+
   return (
     <div className="homepage">
       <img src="/orbital.png" alt="" className="orbital" />
@@ -18,6 +22,7 @@ export default function Homepage() {
           dolorem doloribus, architecto dolor.
         </h3>
         <Link to="/dashboard">Get Started</Link>
+        {/* <button onClick={test}>test clerk </button> */}
       </div>
       <div className="right">
         <div className="imgContainer">

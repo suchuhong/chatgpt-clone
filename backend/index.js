@@ -6,6 +6,7 @@ import path from "path";
 import url, { fileURLToPath } from "url";
 import Chat from "./models/chat.js";
 import UserChats from "./models/userChats.js";
+import { ClerkExpressRequireAuth } from "@clerk/clerk-sdk-node";
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -16,6 +17,7 @@ const __dirname = path.dirname(__filename);
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
+    // 权限验证
     credentials: true,
   })
 );
@@ -45,9 +47,10 @@ app.get("/api/upload", (req, res) => {
   res.send(result);
 });
 
-app.post("/api/chats", async (req, res) => {
+app.post("/api/chats",  ClerkExpressRequireAuth(), async (req, res) => {
 
-  const { userId, text } = req.body;
+  const userId = req.auth.userId
+  const { text } = req.body;
 
   // console.log(text);
 
@@ -104,8 +107,22 @@ app.post("/api/chats", async (req, res) => {
   }
 });
 
-app.get("/api/test", (req, res) => {
-  res.send("it works!")
+// 测试 clerk
+// app.get("/api/test", (req, res) => {
+//   console.log("/api/test")
+//   res.send("/api/test it works!")
+// })
+
+// app.get("/api/test1",  ClerkExpressRequireAuth(), (req, res) => {
+//   const userId = req.auth.userId
+//   console.log("userId +++++++++++ ", userId)
+//   console.log("/api/test1")
+//   res.send("/api/test1 it works!")
+// })
+
+app.use((err, req, res, next) => {
+  console.error(err.stack)
+  res.status(401).send('Unauthenticated!')
 })
 
 app.listen(port, () => {
