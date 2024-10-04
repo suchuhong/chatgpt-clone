@@ -19,6 +19,7 @@ export default function NewPrompt() {
   const endRef = useRef(null)
   const formRef = useRef(null)
 
+  // 二次作用，[]里的数据变化触发
   useEffect(() => {
     endRef.current.scrollIntoView({ behavior: 'smooth' })
   }, [question, answer, img.dbData])
@@ -28,9 +29,18 @@ export default function NewPrompt() {
 
     try {
       // const prompt = 'Write a story about a magic backpack.'
-      const result = await model.generateContent(text)
+      //图片或文字
+      const result = await model.generateContent(
+        Object.entries(img.aiData).length ? [img.aiData, text] : [text]
+      )
       console.log(result.response.text())
       setAnswer(result.response.text())
+      setImg({
+        isLoading: false,
+        error: '',
+        dbData: {},
+        aiData: {},
+      })
     } catch (err) {
       console.log(err)
     }
