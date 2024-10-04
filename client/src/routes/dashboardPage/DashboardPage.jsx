@@ -1,6 +1,24 @@
 import './dashboardPage.css'
+import { useAuth } from '@clerk/clerk-react'
 
 const DashboardPage = () => {
+  const { userId, isLoaded } = useAuth()
+  // 调用接口
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    const text = e.target.text.value
+    if (!text) return
+
+    await fetch(import.meta.env.VITE_API_CHATS, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({ userId, text }),
+    })
+  }
+
   return (
     <div className="dashboardPage">
       <div className="texts">
@@ -24,7 +42,7 @@ const DashboardPage = () => {
         </div>
       </div>
       <div className="formContainer">
-        <form>
+        <form onSubmit={handleSubmit}>
           <input type="text" name="text" placeholder="Ask me anything..." />
           <button>
             <img src="/arrow.png" alt="" />
