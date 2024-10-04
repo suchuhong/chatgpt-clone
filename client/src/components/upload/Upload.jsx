@@ -4,6 +4,7 @@ import { useRef } from 'react'
 const urlEndpoint = import.meta.env.VITE_IMAGE_KIT_ENDPOINT
 const publicKey = import.meta.env.VITE_IMAGE_KIT_PUBLIC_KEY
 
+// 权限验证 固定语法
 const authenticator = async () => {
   try {
     const response = await fetch(import.meta.env.VITE_API_IMAGE_UPLOAD)
@@ -26,7 +27,7 @@ const authenticator = async () => {
   }
 }
 
-const Upload = () => {
+const Upload = ({ setImg }) => {
   const ikUploadRef = useRef(null)
   const onError = (err) => {
     console.log('Error', err)
@@ -34,7 +35,7 @@ const Upload = () => {
 
   const onSuccess = (res) => {
     console.log('Success', res)
-    // setImg((prev) => ({ ...prev, isLoading: false, dbData: res }))
+    setImg((prev) => ({ ...prev, isLoading: false, dbData: res }))
   }
 
   const onUploadProgress = (progress) => {
@@ -44,20 +45,20 @@ const Upload = () => {
   const onUploadStart = (evt) => {
     const file = evt.target.files[0]
 
-    // const reader = new FileReader()
-    // reader.onloadend = () => {
-    //   setImg((prev) => ({
-    //     ...prev,
-    //     isLoading: true,
-    //     aiData: {
-    //       inlineData: {
-    //         data: reader.result.split(',')[1],
-    //         mimeType: file.type,
-    //       },
-    //     },
-    //   }))
-    // }
-    // reader.readAsDataURL(file)
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      setImg((prev) => ({
+        ...prev,
+        isLoading: true,
+        aiData: {
+          inlineData: {
+            data: reader.result.split(',')[1],
+            mimeType: file.type,
+          },
+        },
+      }))
+    }
+    reader.readAsDataURL(file)
   }
 
   return (

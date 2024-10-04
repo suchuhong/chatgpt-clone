@@ -1,9 +1,17 @@
 import React from 'react'
 import './newPrompt.css'
-import { useRef, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { IKImage } from 'imagekitio-react'
 import Upload from '../upload/Upload'
 
 export default function NewPrompt() {
+  const [img, setImg] = useState({
+    isLoading: false,
+    error: '',
+    dbData: {},
+    aiData: {},
+  })
+
   const endRef = useRef(null)
 
   useEffect(() => {
@@ -13,12 +21,20 @@ export default function NewPrompt() {
   return (
     <>
       {/* ADD NEW PROMPT */}
-      TEST 下午茶
+      {/* 显示图片 */}
+      {img.isLoading && <div className="">Loading...</div>}
+      {img.dbData?.filePath && (
+        <IKImage
+          urlEndpoint={import.meta.env.VITE_IMAGE_KIT_ENDPOINT}
+          path={img.dbData?.filePath}
+          width="380"
+          transformation={[{ width: 380 }]}
+        />
+      )}
       <div />
-      测试
       <div className="endChat" ref={endRef}></div>
       <form className="newForm">
-        <Upload />
+        <Upload setImg={setImg} />
         <input id="file" type="file" multiple={false} hidden />
         <input type="text" name="text" placeholder="Ask me anything..." />
         <button>
